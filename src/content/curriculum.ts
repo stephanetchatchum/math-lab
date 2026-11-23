@@ -18,7 +18,7 @@ function topics(course: string, prefix: string, list: [string, string, string, s
 }
 
 const COURSE_NUM: Record<string, number> = {
-  foundations: 0, calculus: 1, linalg: 2, odes: 3, prob: 4, fourier: 5, numerics: 6, physics: 7, science: 8, capstone: 9,
+  foundations: 0, calculus: 1, linalg: 2, odes: 3, prob: 4, fourier: 5, numerics: 6, physics: 7, science: 8, capstone: 9, ml: 10, agents: 11,
 };
 
 export const COURSES: Course[] = [
@@ -184,6 +184,41 @@ export const COURSES: Course[] = [
       ['ising', 'Ising model', 'Monte Carlo and a phase transition.', '🧊', ['ph-statmech', 'nm-montecarlo']],
       ['schrodinger', 'Quantum particle in a box / tunnelling', 'Numerical Schrödinger.', 'ψ', ['ph-quantum', 'nm-eigalg']],
       ['fluid', 'Simple fluid flow', 'Lattice Boltzmann or a stable 2D solver.', '🌊', ['ph-fluids', 'nm-fdpde']],
+    ]),
+  },
+  {
+    id: 'ml', number: 10, title: 'Machine learning',
+    blurb: 'Learning from data, built from the maths up: from linear models to neural networks, transformers and generative models.',
+    topics: topics('ml', 'ml', [
+      ['intro', 'What learning from data means', 'Supervised, unsupervised, reinforcement; training vs testing.', '⌬', ['ps-regression']],
+      ['linear', 'Linear and logistic regression as learning', 'Loss functions and gradient descent.', '⟋', ['ml-intro', 'nm-optim']],
+      ['generalisation', 'Generalisation and regularisation', 'Overfitting, bias–variance, cross-validation.', '⚖', ['ml-linear']],
+      ['classic', 'Classic methods', 'k-nearest neighbours, decision trees, random forests, SVMs.', '🌲', ['ml-generalisation']],
+      ['unsupervised', 'Unsupervised learning', 'Clustering, mixtures, PCA and embeddings.', '⁘', ['ml-generalisation', 'la-svd']],
+      ['nn', 'Neural networks from scratch', 'Neurons, layers, activations; what a network can represent.', '◉', ['ml-linear', 'calc-gradient']],
+      ['backprop', 'Backpropagation and automatic differentiation', 'The chain rule, run backwards through a graph.', '⇠', ['ml-nn']],
+      ['training', 'Training deep networks', 'SGD, momentum, Adam, initialisation, normalisation, debugging.', '⛰', ['ml-backprop']],
+      ['cnn', 'Convolutional networks', 'Convolution, filters, images and grids.', '▦', ['ml-training', 'fo-transform']],
+      ['sequence', 'Sequence models and transformers', 'RNNs, attention, transformers.', '⋯', ['ml-training']],
+      ['generative', 'Generative models', 'Autoencoders, VAEs, GANs and diffusion.', '✧', ['ml-training', 'ps-bayes']],
+      ['probabilistic', 'Probabilistic machine learning', 'Bayesian regression, Gaussian processes, uncertainty.', '∝', ['ml-generalisation', 'ps-bayes']],
+      ['practice', 'Machine learning in practice', 'Data, evaluation, reproducibility, failure modes, ethics.', '✓', ['ml-generalisation']],
+    ]),
+  },
+  {
+    id: 'agents', number: 11, title: 'Learning agents and scientific ML',
+    blurb: 'Agents that learn inside simulations, and machine learning that respects physics.',
+    topics: topics('agents', 'ag', [
+      ['evolution', 'Evolutionary algorithms and neuroevolution', 'Populations, mutation, selection; evolving network weights.', '🧬', ['ml-nn']],
+      ['rl', 'Reinforcement learning basics', 'Agents, rewards, value, the Bellman equation, Q-learning.', '🎮', ['ml-intro', 'ps-rv']],
+      ['deeprl', 'Deep reinforcement learning', 'DQN, policy gradients and PPO.', '🤖', ['ag-rl', 'ml-training']],
+      ['environments', 'Building learning environments', 'Physics sims as environments, observations, reward shaping.', '🏗', ['ag-deeprl', 'ph-momentum', 'nm-ode2']],
+      ['multiagent', 'Multi-agent learning and emergence', 'Self-play, competition, cooperation, emergent behaviour.', '⚔', ['ag-environments']],
+      ['surrogates', 'Surrogate models for simulations', 'Fast learned stand-ins for expensive simulations.', '⚡', ['ml-training', 'nm-vv']],
+      ['pinns', 'Physics-informed neural networks', 'Putting the differential equation into the loss.', '∂', ['ml-backprop', 'nm-fdpde']],
+      ['learned-sims', 'Learned simulators', 'Graph networks and neural operators.', '⌘', ['ag-surrogates']],
+      ['cap-arena', 'Capstone: agents learn in your physics arena', 'Creatures that learn to move and compete in a sim you wrote.', '🏟', ['ag-multiagent', 'ag-evolution']],
+      ['cap-surrogate', 'Capstone: a neural surrogate for heat flow', 'Train a network to replace a PDE solver, then validate it.', '🔥', ['ag-pinns', 'ag-learned-sims', 'cap-heat2d']],
     ]),
   },
 ];

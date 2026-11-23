@@ -62,6 +62,12 @@ All of this is unit-tested against a mock that reproduces each quirk, and tested
 
 ## Curriculum changes
 
+- **Added Course 10 "Machine learning" and Course 11 "Learning agents and scientific ML"** (2026-11-23, at your request), taught to the same depth as the other courses.
+  - Course 10 runs from learning-from-data and regression, through classic methods, unsupervised learning, neural networks built from scratch, backpropagation, training, CNNs, transformers and generative models, to probabilistic ML and ML in practice.
+  - Course 11 covers evolutionary methods, reinforcement learning, deep RL, building learning environments from physics simulations, and multi-agent emergence. This is the "AI agents learn in a simulated world" kind of project. Its scientific-ML half covers surrogates, physics-informed networks and learned simulators.
+  - Each course ends with a capstone.
+  - **Browser limit:** Pyodide ships scikit-learn but not PyTorch, JAX or TensorFlow. Neural networks are therefore built from scratch in numpy, which is also better for understanding them, and the in-browser exercises use small models. Where a real framework matters, lessons show the PyTorch equivalent as read-only code and name it as the tool to use on your own machine.
+
 - None yet. Calculus 1.2 was built ahead of Course 0 as the Milestone 1 sample, because it exercises every step type, including the numerical "cost/accuracy" meter.
 - Its prerequisite is Calculus 1.1 (Limits), which is not built yet. The dashboard marks unbuilt topics "coming soon", and the derivative topic links them by name.
 

@@ -6,7 +6,7 @@ import { isBuilt } from '../../content/registry';
 import { useProgress } from '../state';
 
 const NW = 186, NH = 44, GX = 64, GY = 14;
-const COURSE_HUE = ['#f6d860', '#ffa657', '#7cc4f2', '#c3a6ff', '#a6e37f', '#ff8fc7', '#5fd1c1', '#f0b27a', '#9fd8cf', '#ff7b6b'];
+const COURSE_HUE = ['#f6d860', '#ffa657', '#7cc4f2', '#c3a6ff', '#a6e37f', '#ff8fc7', '#5fd1c1', '#f0b27a', '#9fd8cf', '#ff7b6b', '#b3e5fc', '#e6b3ff'];
 
 export default function MapPage() {
   const { data } = useProgress();
