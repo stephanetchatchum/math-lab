@@ -350,7 +350,7 @@ const topic: Topic = {
             { type: 'code', code: "import sympy as sp\nv, u, a, t = sp.symbols('v u a t')\nprint(sp.solve(sp.Eq(v, u + a*t), t))      # [(v - u)/a]\nx = sp.symbols('x')\nprint(sp.solve(x**2 - 5*x + 6, x))          # [2, 3]\nprint(sp.solve(sp.sqrt(x + 2) - x, x))      # [2]  (sympy checks for you)", say: 'With sympy, solve v equals u plus a t for t, solve x squared minus 5 x plus 6, and solve root of x plus 2 minus x, which gives only 2.' },
             { type: 'p', text: 'Use **numpy** for numerical roots of polynomials, and Python’s exact fractions when you want rational arithmetic without rounding:' },
             { type: 'code', code: 'import numpy as np\nfrom fractions import Fraction\nprint(np.roots([1, -5, 6]))                 # [3. 2.]\nprint(Fraction(1, 3) + Fraction(1, 6))      # 1/2\nprint(0.1 + 0.2 == 0.3)                     # False: floats are rounded', say: 'np dot roots of 1, minus 5, 6 gives 3 and 2. Fractions add exactly: one third plus one sixth is one half. And 0.1 plus 0.2 is not exactly 0.3 in floating point.' },
-            { type: 'note', kind: 'python', text: R`In Python {{x^2|x squared}} is written \`x**2\`. The caret \`^\` means something else (bitwise XOR), and \`2^3\` is 1, not 8.` },
+            { type: 'note', kind: 'python', text: "In Python {{x^2|x squared}} is written `x**2`. The caret `^` means something else (bitwise XOR), and `2^3` is 1, not 8." },
           ],
         },
         {

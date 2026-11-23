@@ -16,6 +16,8 @@ const BASE: Record<string, U> = {
   s: { f: 1, d: d(0, 0, 1) },
   min: { f: 60, d: d(0, 0, 1) },
   h: { f: 3600, d: d(0, 0, 1) },
+  day: { f: 86400, d: d(0, 0, 1) },
+  yr: { f: 365.25 * 86400, d: d(0, 0, 1) },
   A: { f: 1, d: d(0, 0, 0, 1) },
   K: { f: 1, d: d(0, 0, 0, 0, 1) },
   mol: { f: 1, d: d(0, 0, 0, 0, 0, 1) },
@@ -40,7 +42,7 @@ function lookup(sym: string): U {
   if (BASE[sym]) return BASE[sym];
   const p = sym[0];
   const rest = sym.slice(1);
-  if (PREFIX[p] && BASE[rest] && !['min', 'mol', 'deg', 'rad', 'ohm'].includes(rest)) {
+  if (PREFIX[p] && BASE[rest] && !['min', 'mol', 'deg', 'rad', 'ohm', 'day', 'yr'].includes(rest)) {
     return { f: PREFIX[p] * BASE[rest].f, d: BASE[rest].d };
   }
   throw new Error(`Unknown unit “${sym}”`);

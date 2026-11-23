@@ -54,6 +54,7 @@ function say(s: string | undefined, where: string) {
   ok(!s || !/[\\{}^_]/.test(s), `${where}: spoken form contains TeX characters: “${s}”`);
 }
 function rich(s: string, where: string, glossary: Set<string>, maxLen?: number) {
+  ok(!s.includes('\\`'), `${where}: stray backslash before a backtick (String.raw with escaped backticks?)`);
   let segs;
   try {
     segs = parseRich(s);

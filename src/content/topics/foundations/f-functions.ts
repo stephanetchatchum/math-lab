@@ -321,7 +321,7 @@ const topic: Topic = {
           title: 'Costs and numerical issues',
           blocks: [
             { type: 'p', text: 'On a computer a function of a real variable is usually evaluated on a grid of sample points, an array. A plot is just the samples joined by lines, so too few samples can hide a sharp spike completely.' },
-            { type: 'p', text: R`Domains bite in floating point. {{0.3-3\times0.1|0.3 minus 3 times 0.1}} should be 0, but it is {{-5.55\times10^{-17}|minus 5.55 times ten to the minus seventeen}}, and \`np.sqrt\` of it is \`nan\` (not a number). Clip with \`np.maximum(0, …)\` when rounding may push a value just outside the domain.` },
+            { type: 'p', text: "Domains bite in floating point. {{0.3-3\\times0.1|0.3 minus 3 times 0.1}} should be 0, but it is {{-5.55\\times10^{-17}|minus 5.55 times ten to the minus seventeen}}, and `np.sqrt` of it is `nan` (not a number). Clip with `np.maximum(0, …)` when rounding may push a value just outside the domain." },
             { type: 'p', text: R`Speed matters too. NumPy evaluates a function on a whole array in compiled code, often 10 to 100 times faster than a Python loop over the same points. Writing functions that accept arrays is called vectorising.` },
             { type: 'note', kind: 'compsci', text: 'A nan spreads: any arithmetic with nan gives nan. One out-of-domain value deep inside a simulation can turn every later number into nan. Check inputs at the boundary of each function.' },
           ],
@@ -478,7 +478,7 @@ const topic: Topic = {
       id: 'fill',
       kind: 'fillGap',
       mode: 'code',
-      intro: R`Fill the gaps so \`transform\` returns the function {{x\mapsto a\,f(b(x-c))+d|x maps to a f of b times x minus c, plus d}}.`.replace(/\\`/g, '`'),
+      intro: "Fill the gaps so `transform` returns the function {{x\\mapsto a\\,f(b(x-c))+d|x maps to a f of b times x minus c, plus d}}.".replace(/\\`/g, '`'),
       template: 'import numpy as np\n\ndef transform(f, a, b, c, d):\n    return lambda x: ⟦A⟧ * f(⟦B⟧ * (x - ⟦C⟧)) + d\n\nbump = lambda x: np.exp(-x**2)\nshifted = transform(bump, 1, 1, 2, 0)\nprint(shifted(2.0))   # the peak, now at x = 2\n',
       blanks: [
         { id: 'A', answers: ['a'], check: 'exact', hint: 'The vertical stretch multiplies the output.' },
