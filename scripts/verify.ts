@@ -420,7 +420,21 @@ async function main() {
                 ok(r2.ok && r2.tests?.every((x) => x.ok), `${w}: alternative answer “${alt}” for blank ${b.id} fails the tests`);
               }
           }
-          s.blanks.forEach((b) => rich(b.hint, `${w} blank ${b.id} hint`, GLOSS));
+          for (const b of s.blanks) {
+            rich(b.hint, `${w} blank ${b.id} hint`, GLOSS);
+            if (b.check === 'expr') {
+              const vars = b.vars ?? ['x'];
+              for (const a of b.answers) {
+                try {
+                  parseExpr(a, vars);
+                  checks++;
+                } catch (e) {
+                  fails.push(`${w}: blank ${b.id} answer “${a}” doesn't parse: ${(e as Error).message}`);
+                }
+                ok(py.exec(`mathlab_same(${JSON.stringify(a.replace(/\^/g, '**'))}, ${JSON.stringify(b.answers[0].replace(/\^/g, '**'))}, ${JSON.stringify(vars)})`) === true, `${w}: blank ${b.id} alternatives are not equivalent`);
+              }
+            }
+          }
           break;
         }
         case 'used':
