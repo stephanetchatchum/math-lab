@@ -501,3 +501,9 @@ input.answer { min-width: min(340px, 100%); }
 .panel select.btn { max-width: 100%; }
 @media (max-width: 760px) { .rail a.nav { font-size: 10px; padding: 4px 2px; min-width: 0; } .rail a.nav svg { width: 20px; height: 20px; } }
 .hook-q.small { font-family: var(--font-body); font-size: 1.3em; line-height: 1.5; max-width: 60ch; }
+
+.your-topics { margin: 14px 0 4px; }
+.small-h { font-size: 1.4em; margin: 0 0 8px; }
+.step-jump { max-width: 220px; }
+.done-banner { margin: 10px 0 0; max-width: 80ch; }
+.focus .step-jump { display: none; }

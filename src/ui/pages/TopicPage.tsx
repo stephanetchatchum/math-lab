@@ -44,7 +44,8 @@ function Player({ topic, stepParam }: { topic: Topic; stepParam?: string }) {
   const tIndex = course.topics.findIndex((t) => t.id === topic.id);
 
   const fromParam = stepParam ? steps.findIndex((s) => s.id === stepParam) : -1;
-  const index = fromParam >= 0 ? fromParam : Math.min(tp.step, steps.length - 1);
+  // a finished topic opens at the beginning, so you can study it again
+  const index = fromParam >= 0 ? fromParam : tp.done ? 0 : Math.min(tp.step, steps.length - 1);
   const step = steps[index];
 
   useEffect(() => {
@@ -124,6 +125,14 @@ function Player({ topic, stepParam }: { topic: Topic; stepParam?: string }) {
           <span className="step-label" data-testid="step-label">
             step <b>{index + 1}</b> of {steps.length} — {label}
           </span>
+          <select className="btn step-jump" aria-label="Jump to a step" value={step.id} onChange={(e) => nav(`/topic/${topic.id}/${e.target.value}`)} data-testid="step-jump">
+            {steps.map((s, i) => (
+              <option key={s.id} value={s.id}>
+                {i + 1}. {s.title ?? STEP_LABEL[s.kind]}
+                {tp.completed.includes(s.id) ? ' ✓' : ''}
+              </option>
+            ))}
+          </select>
           <button
             className={`btn ${data.settings.focus ? 'on' : ''}`}
             aria-pressed={data.settings.focus}
@@ -134,6 +143,11 @@ function Player({ topic, stepParam }: { topic: Topic; stepParam?: string }) {
           </button>
         </div>
       </div>
+      {tp.done && index === 0 && !stepParam && (
+        <p className="verdict ok done-banner" data-testid="done-banner">
+          You finished this topic{tp.doneAt ? ` on ${tp.doneAt}` : ''}. Everything stays open: go through it again, or jump to any step with the menu above.
+        </p>
+      )}
       <div className="progress-bar thin" aria-hidden="true">
         <i style={{ width: `${((index + 1) / steps.length) * 100}%` }} />
       </div>

@@ -192,3 +192,24 @@ test('Just opening a topic or changing settings does not count as starting or as
   await expect(page.getByTestId('continue')).toContainText('Continue where you left off');
   await expect(page.locator('.stat').filter({ hasText: 'day streak' }).locator('b')).toHaveText('1');
 });
+
+test('A finished topic stays open: it reopens at step 1 and every step is reachable', async ({ page }) => {
+  await fresh(page);
+  const ids = topic.steps.map((s) => s.id);
+  await page.evaluate((stepIds) => {
+    localStorage.setItem('mathlab.progress.v1', JSON.stringify({
+      version: 1,
+      topics: { 'calc-derivative': { step: stepIds.length - 1, total: stepIds.length, completed: stepIds, answers: {}, code: {}, ownWords: 'done', done: true, doneAt: '2026-11-23' } },
+      review: {}, solved: {}, activity: [], settings: {}, updatedAt: '',
+    }));
+  }, ids);
+  await page.reload();
+  await expect(page.getByTestId('all-done')).toBeVisible();
+  await page.getByTestId('open-calc-derivative').click();
+  await expect(page.getByTestId('step-label')).toContainText('step 1 of');
+  await expect(page.getByTestId('done-banner')).toBeVisible();
+  await page.screenshot({ path: `${SHOTS}/24-finished-topic.png` });
+  await page.getByTestId('step-jump').selectOption('learn-2');
+  await expect(page.getByTestId('step-label')).toContainText(`step ${ids.indexOf('learn-2') + 1} of`);
+  await expect(page.getByTestId('step-learn')).toBeVisible();
+});

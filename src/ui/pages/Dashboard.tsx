@@ -10,6 +10,7 @@ export function Dashboard() {
   const solved = Object.keys(data.solved).length;
   const due = dueReviews(data).length;
   const nextId = COURSES.flatMap((c) => c.topics).find((t) => isBuilt(t.id) && !data.topics[t.id]?.done)?.id;
+  const built = COURSES.flatMap((c) => c.topics).filter((t) => isBuilt(t.id));
 
   return (
     <div className="dashboard">
@@ -47,6 +48,26 @@ export function Dashboard() {
           </b>
           <span className="btn primary">{hasStarted(data.topics[nextId]) ? 'Continue →' : 'Start →'}</span>
         </Link>
+      )}
+      {!nextId && built.length > 0 && (
+        <div className="card continue" data-testid="all-done">
+          <span className="faint">You’ve finished every topic built so far. New topics arrive course by course.</span>
+        </div>
+      )}
+      {built.length > 0 && (
+        <div className="your-topics" data-testid="your-topics">
+          <h2 className="small-h">Topics you can open now</h2>
+          <div className="row">
+            {built.map((t) => (
+              <Link key={t.id} to={`/topic/${t.id}`} className="btn" data-testid={`open-${t.id}`}>
+                {t.number} {t.title} {data.topics[t.id]?.done ? '✓' : ''}
+              </Link>
+            ))}
+          </div>
+          <p className="faint small">
+            Built so far: {built.length} of {COURSES.reduce((n, c) => n + c.topics.length, 0)} topics. Course 0 (Foundations) is next. Greyed cards below are planned and not built yet.
+          </p>
+        </div>
       )}
       <p className="row" style={{ marginTop: 10 }}>
         <Link className="btn small ghost" to="/map">
