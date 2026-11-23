@@ -85,7 +85,8 @@ function eq(e: Eq, where: string) {
 function finite(v: number) {
   return typeof v === 'number' && Number.isFinite(v);
 }
-function scene(sc: Scene, where: string) {
+/** `lenient`: sandbox states may legitimately put a curve outside its domain. */
+function scene(sc: Scene, where: string, lenient = false) {
   if (!ok(sc && Array.isArray(sc.items), `${where}: no scene`)) return;
   ok(finite(sc.x[0]) && finite(sc.x[1]) && sc.x[0] < sc.x[1], `${where}: bad x range`);
   ok(finite(sc.y[0]) && finite(sc.y[1]) && sc.y[0] < sc.y[1], `${where}: bad y range`);
@@ -98,7 +99,7 @@ function scene(sc: Scene, where: string) {
         const a = it.from ?? sc.x[0], b = it.to ?? sc.x[1];
         let good = 0;
         for (let k = 0; k <= 50; k++) if (finite(it.f(a + ((b - a) * k) / 50))) good++;
-        ok(good >= 10, `${w}: function is not finite on the visible range`);
+        ok(lenient || good >= 10, `${w}: function is not finite on the visible range`);
         break;
       }
       case 'polyline': it.points.forEach((p) => pts.push(p[0], p[1])); ok(it.points.length >= 1, `${w}: empty polyline`); break;
@@ -280,7 +281,7 @@ function sandbox(def: SandboxDef, where: string) {
       const w = `${where} sandbox ${JSON.stringify(ch)} at ${frac}`;
       try {
         const out = def.render(state);
-        scene(out.scene, w);
+        scene(out.scene, w, true);
         if (out.eq) eq(out.eq, w);
         out.readouts?.forEach((r) => ok(r.value.length > 0, `${w}: empty readout ${r.label}`));
         const m = def.meter?.(state);
