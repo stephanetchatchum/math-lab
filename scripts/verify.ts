@@ -323,7 +323,12 @@ async function main() {
   ok(new Set(ALL_TOPIC_META.map((t) => t.id)).size === ALL_TOPIC_META.length, 'curriculum: duplicate topic ids');
 
   const topics = await loadTopics();
-  topics.forEach(({ topic }) => topic.glossary?.forEach((g) => GLOSS.add(g.id)));
+  topics.forEach(({ topic }) =>
+    topic.glossary?.forEach((g) => {
+      ok(!GLOSS.has(g.id), `${topic.id}: glossary id “${g.id}” is already defined elsewhere`);
+      GLOSS.add(g.id);
+    }),
+  );
   CORE_GLOSSARY.forEach((g) => rich(g.def, `glossary ${g.id}`, GLOSS));
 
   // compare tables

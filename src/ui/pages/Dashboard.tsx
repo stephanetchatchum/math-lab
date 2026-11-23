@@ -65,7 +65,12 @@ export function Dashboard() {
             ))}
           </div>
           <p className="faint small">
-            Built so far: {built.length} of {COURSES.reduce((n, c) => n + c.topics.length, 0)} topics. Course 0 (Foundations) is next. Greyed cards below are planned and not built yet.
+            Built so far: {built.length} of {COURSES.reduce((n, c) => n + c.topics.length, 0)} topics.{' '}
+            {(() => {
+              const c = COURSES.find((k) => k.topics.some((t) => !isBuilt(t.id)));
+              return c ? `Course ${c.number} (${c.title}) is being built next.` : '';
+            })()}{' '}
+            Greyed cards are planned and not built yet.
           </p>
         </div>
       )}

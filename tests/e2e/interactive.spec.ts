@@ -178,7 +178,8 @@ test('Pages: formulas search, glossary, compare, settings themes and export', as
 
 test('Just opening a topic or changing settings does not count as starting or as a study day', async ({ page }) => {
   await fresh(page);
-  await page.goto('./#/topic/calc-derivative/learn-1');
+  // the first built topic in course order is the one the dashboard suggests
+  await page.goto('./#/topic/f-algebra/learn-1');
   await expect(page.getByTestId('step-label')).toBeVisible();
   await page.getByTestId('focus-toggle').click();
   await page.getByTestId('focus-toggle').click();
@@ -186,7 +187,7 @@ test('Just opening a topic or changing settings does not count as starting or as
   await expect(page.getByTestId('continue')).toContainText('Start here');
   await expect(page.locator('.stat').filter({ hasText: 'day streak' }).locator('b')).toHaveText('0');
   // doing a step does count
-  await page.goto('./#/topic/calc-derivative/hook');
+  await page.goto('./#/topic/f-algebra/hook');
   await page.getByRole('button', { name: /I want to know/ }).click();
   await page.goto('./#/');
   await expect(page.getByTestId('continue')).toContainText('Continue where you left off');
@@ -204,7 +205,6 @@ test('A finished topic stays open: it reopens at step 1 and every step is reacha
     }));
   }, ids);
   await page.reload();
-  await expect(page.getByTestId('all-done')).toBeVisible();
   await page.getByTestId('open-calc-derivative').click();
   await expect(page.getByTestId('step-label')).toContainText('step 1 of');
   await expect(page.getByTestId('done-banner')).toBeVisible();

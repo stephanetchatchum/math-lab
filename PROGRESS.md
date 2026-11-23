@@ -1,11 +1,11 @@
 # Progress
 
-Resume here: **Milestone 1 is done and waiting for your feedback.** The next milestone is **2: Course 0 (Foundations)**. Build the topics in the order listed, one file each in `src/content/topics/foundations/`, following `src/content/topics/calculus/calc-derivative.ts`. Run `npm run verify` and `npm run e2e` before each push.
+Resume here: **Milestone 2 (Course 0 Foundations) is done and pushed.** Next is **Milestone 3: Course 1 (Calculus)**. Start with `calc-limits` (1.1), then the rest in order; `calc-derivative` (1.2) is already built. Write each topic in `src/content/topics/calculus/`, following the Course 0 topics. After each topic: `npm run verify`, `npm run build`, `npx playwright test all-topics --project=desktop -g <id>`, and look at its frames with `TOPIC=<id> npx playwright test -c tests/review/pw.config.ts` (images in `screenshots/frames/`). Then commit and push.
 
 ## Milestones
 
 - [x] 1. Framework + sample topic (Calculus 1.2 The derivative)
-- [ ] 2. Course 0 Foundations
+- [x] 2. Course 0 Foundations (6 topics, pushed 2026-11-23)
 - [ ] 3. Course 1 Calculus
 - [ ] 4. Courses 2–3
 - [ ] 5. Courses 4–5
@@ -33,15 +33,21 @@ Resume here: **Milestone 1 is done and waiting for your feedback.** The next mil
 - [ ] Supabase store (deferred by agreement)
 - [ ] Before Course 10: add `scikit-learn` to `PY_PACKAGES` in `src/py/version.ts` (Pyodide ships it; PyTorch/JAX are not available in the browser)
 
+## Notes for the next session
+
+- The 3D projection component is still to be built, needed from Calculus 1.8 (partial derivatives).
+- Authoring helpers: `scripts/fix-raw-strings.py` repairs String.raw literals that contain escaped backticks; `scripts/montage.py` tiles review screenshots.
+- Every topic needs: a hook with a visual, 3 learn parts of 3–5 sections, 3 animations, 2–3 recall questions, a sandbox, a predict step, a worked example, 3–5 hand problems (each with a `truth`), a compute problem, a fill-the-gap, 3+ uses, 3 code problems, real outside practice, and a recap with a 3-question quiz.
+
 ## Topics
 
 ### 0. Foundations
-- [ ] `f-algebra` Numbers, algebra and equations
-- [ ] `f-functions` Functions and graphs
-- [ ] `f-explog` Exponentials and logarithms
-- [ ] `f-trig` Trigonometry and the unit circle
-- [ ] `f-units` Units, dimensions and estimation
-- [ ] `f-logic` Logic, sets and proof
+- [x] `f-algebra` Numbers, algebra and equations
+- [x] `f-functions` Functions and graphs
+- [x] `f-explog` Exponentials and logarithms
+- [x] `f-trig` Trigonometry and the unit circle
+- [x] `f-units` Units, dimensions and estimation
+- [x] `f-logic` Logic, sets and proof
 
 ### 1. Calculus
 - [ ] `calc-limits` Limits and continuity
