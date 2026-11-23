@@ -154,6 +154,8 @@ test('Pages: formulas search, glossary, compare, settings themes and export', as
   for (const t of ['chalk', 'paper']) {
     await page.getByTestId(`theme-${t}`).click();
     await page.goto('./#/topic/calc-derivative/learn-1');
+    await expect(page.locator('section#picture svg.scene')).toBeVisible();
+    await page.locator('section#picture').scrollIntoViewIfNeeded();
     await page.screenshot({ path: `${SHOTS}/32-theme-${t}.png` });
     await page.goto('./#/settings');
   }
