@@ -9,7 +9,7 @@ import { ROLES, QUANTITIES } from '../../content/quantities';
 export default function SettingsPage() {
   const { data, update, replace, store } = useProgress();
   const s = data.settings;
-  const set = (fn: (x: Settings) => void) => update((d) => fn(d.settings));
+  const set = (fn: (x: Settings) => void) => update((d) => fn(d.settings), { activity: false });
   const reader = useReader();
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState('');

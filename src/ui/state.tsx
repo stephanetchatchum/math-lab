@@ -3,7 +3,8 @@ import { createStore, emptyProgress, today, type ProgressData, type ProgressStor
 
 interface Ctx {
   data: ProgressData;
-  update: (fn: (d: ProgressData) => void) => void;
+  /** `activity: false` for things that aren't learning (settings, merely opening a page): they don't count toward the streak. */
+  update: (fn: (d: ProgressData) => void, opts?: { activity?: boolean }) => void;
   replace: (d: ProgressData) => void;
   store: ProgressStore;
 }
@@ -53,12 +54,12 @@ export function ProgressProvider({ children, store: injected }: { children: Reac
   );
 
   const update = useCallback(
-    (fn: (d: ProgressData) => void) => {
+    (fn: (d: ProgressData) => void, opts?: { activity?: boolean }) => {
       setData((cur) => {
         const next: ProgressData = structuredClone(cur ?? emptyProgress());
         fn(next);
         const t = today();
-        if (!next.activity.includes(t)) next.activity = [...next.activity.slice(-400), t];
+        if (opts?.activity !== false && !next.activity.includes(t)) next.activity = [...next.activity.slice(-400), t];
         next.updatedAt = new Date().toISOString();
         pending.current = next;
         if (timer.current) clearTimeout(timer.current);
@@ -88,12 +89,17 @@ export function useTopicProgress(id: string) {
   const { data, update } = useProgress();
   const tp = topicProgress(data, id);
   const set = useCallback(
-    (fn: (t: TopicProgress) => void) =>
+    (fn: (t: TopicProgress) => void, opts?: { activity?: boolean }) =>
       update((d) => {
         const t = (d.topics[id] ??= { step: 0, completed: [], answers: {}, code: {} });
         fn(t);
-      }),
+      }, opts),
     [id, update],
   );
   return [tp, set] as const;
+}
+
+/** True once the learner has actually done something in a topic (not just opened it). */
+export function hasStarted(t: TopicProgress | undefined): boolean {
+  return !!t && (t.completed.length > 0 || Object.keys(t.answers).length > 0 || Object.keys(t.code).length > 0 || !!t.ownWords?.trim());
 }

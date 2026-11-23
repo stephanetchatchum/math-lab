@@ -37,7 +37,7 @@ export function ReaderBar() {
     return () => window.removeEventListener('keydown', onKey);
   }, [r]);
 
-  const set = (fn: (st: typeof s) => void) => update((d) => fn(d.settings));
+  const set = (fn: (st: typeof s) => void) => update((d) => fn(d.settings), { activity: false });
   const playing = r.state === 'playing';
   const label = playing ? '❚❚ Pause' : r.state === 'paused' ? '▶ Resume' : '▶ Listen';
   const status =

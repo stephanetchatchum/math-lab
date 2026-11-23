@@ -49,10 +49,13 @@ function Player({ topic, stepParam }: { topic: Topic; stepParam?: string }) {
 
   useEffect(() => {
     if (tp.step !== index || tp.total !== steps.length)
-      setTp((t) => {
-        t.step = index;
-        t.total = steps.length;
-      });
+      setTp(
+        (t) => {
+          t.step = index;
+          t.total = steps.length;
+        },
+        { activity: false }, // opening a topic is not studying it
+      );
   }, [index, tp.step, tp.total, steps.length, setTp]);
 
   const markComplete = useCallback(() => {
@@ -124,7 +127,7 @@ function Player({ topic, stepParam }: { topic: Topic; stepParam?: string }) {
           <button
             className={`btn ${data.settings.focus ? 'on' : ''}`}
             aria-pressed={data.settings.focus}
-            onClick={() => update((d) => void (d.settings.focus = !d.settings.focus))}
+            onClick={() => update((d) => void (d.settings.focus = !d.settings.focus), { activity: false })}
             data-testid="focus-toggle"
           >
             ◎ Focus

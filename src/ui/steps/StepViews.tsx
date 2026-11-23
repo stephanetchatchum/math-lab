@@ -23,7 +23,7 @@ export interface StepProps<S extends Step = Step> {
   topic: Topic;
   step: S;
   tp: TopicProgress;
-  setTp: (fn: (t: TopicProgress) => void) => void;
+  setTp: (fn: (t: TopicProgress) => void, opts?: { activity?: boolean }) => void;
   /** Allowed to move on (soft gate: always true, but steps can mark themselves complete). */
   markComplete: () => void;
   steps: Step[];

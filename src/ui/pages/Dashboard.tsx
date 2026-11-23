@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { COURSES, META_BY_ID } from '../../content/curriculum';
 import { COMPARE, isBuilt } from '../../content/registry';
 import { dueReviews, streak } from '../../engine/progress';
-import { useProgress } from '../state';
+import { hasStarted, useProgress } from '../state';
 
 export function Dashboard() {
   const { data } = useProgress();
@@ -41,11 +41,11 @@ export function Dashboard() {
       </div>
       {nextId && (
         <Link to={`/topic/${nextId}`} className="card continue" data-testid="continue">
-          <span className="faint">{data.topics[nextId] ? 'Continue where you left off' : 'Start here'}</span>
+          <span className="faint">{hasStarted(data.topics[nextId]) ? 'Continue where you left off' : 'Start here'}</span>
           <b className="display">
             {META_BY_ID[nextId].number} {META_BY_ID[nextId].title}
           </b>
-          <span className="btn primary">{data.topics[nextId] ? 'Continue →' : 'Start →'}</span>
+          <span className="btn primary">{hasStarted(data.topics[nextId]) ? 'Continue →' : 'Start →'}</span>
         </Link>
       )}
       <p className="row" style={{ marginTop: 10 }}>
